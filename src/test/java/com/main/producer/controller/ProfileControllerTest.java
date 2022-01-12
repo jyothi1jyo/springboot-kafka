@@ -1,7 +1,6 @@
 package com.main.producer.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -123,7 +122,7 @@ class ProfileControllerTest {
         profileData.setFirstName("Test");
         profileData.setLastName("Test1");
         profileData.setGenderBio("M");
-        profileData.setBirthdate(LocalDate.parse("2003-11-11"));
+        profileData.setBirthdate(LocalDate.parse("2021-01-01"));
         Addresses address = new Addresses("address", "testcity", "state", "zip", "test");
         profileData.setAddresses(address);
         Email1 email1 = new Email1("temp@gmail.com", "user");

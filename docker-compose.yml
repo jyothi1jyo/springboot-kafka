@@ -1,0 +1,48 @@
+
+services:
+  cache:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+  mongo_db:
+    image: "mongo:4.4.3"
+    restart: always
+    ports:
+      - 27017:27017
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper:zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+  api_service:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_REDIS_HOST: cache
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+        - cache
+        - kafka
+    links:
+      - mongo_db:app_db
+      - kafka:kafka
+     # - redis-server:redis

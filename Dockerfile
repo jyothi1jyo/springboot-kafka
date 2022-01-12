@@ -1,4 +1,4 @@
-FROM openjdk:11
-ADD target/docker-spring-kafka.jar docker-spring-kafka.jar
-EXPOSE 8086
-ENTRYPOINT ["java", "-jar", "docker-spring-kafka.jar"]
+FROM openjdk:11-slim
+COPY ./target/spring-boot-kafka.jar spring-boot-kafka.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar","/spring-boot-kafka.jar"]

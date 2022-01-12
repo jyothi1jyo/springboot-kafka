@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileProducerService {
 
-    //@Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 	public ProfileProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
