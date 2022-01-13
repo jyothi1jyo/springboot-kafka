@@ -45,8 +45,15 @@ public class ProfileService {
     }
 
     @CacheEvict(cacheNames = "profiles", key = "#id", allEntries = true)
-    public void deleteById(String id) {
-
-        profileRepository.deleteById(id);
+    public Optional<Profile> deleteById(String id) {
+    	Optional<Profile>  p = profileRepository.findById(id);    	
+    	if(!p.isEmpty()) {
+    		profileRepository.deleteById(id);
+    		LOGGER.info("Record Deleted successfully");
+    	}
+    	else {
+    		LOGGER.info("No Record exists with this ID");
+    	}
+    	return p;
     }
 }

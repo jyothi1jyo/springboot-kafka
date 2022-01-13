@@ -103,12 +103,12 @@ public class ProfileController {
 	}
 
 	@DeleteMapping("/profile/{id}")
-	public ResponseEntity<HttpStatus> deleteProfile(@PathVariable("id") String id) {
+	public ResponseEntity<String> deleteProfile(@PathVariable("id") String id) {
 
 		LOGGER.info("ProfileController In deleteProfile");
-
-		profileService.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		Profile profileData = profileService.deleteById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found profile with id = " + id));
+		return new ResponseEntity<>("Record Deleted successfully with ID = "+profileData.getId(), HttpStatus.OK);
 
 	}
 }
